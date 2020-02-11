@@ -3,7 +3,9 @@ var path = require("path");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var neo4j = require('neo4j-driver');
+const request = require('request');
 
+//Initialize express
 var app = express ();
 
 //View Engine
@@ -19,17 +21,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'neo'))
 var session = driver.session();
 
+
+//main page resnder path
 app.get('/', function(req, res){
       res.render('index');
 });
+
+//most likely will never reach its initial commit
 app.get('/Recommend', function(req, res){
   res.render('recommend');
 
 });
+//Search page render path
 app.get('/Search', function(req, res){
   res.render('search');
 
-
+  //result from search
 app.post('/result', function(req,res){
   var query = req.body.query;
   console.log(query);
@@ -52,13 +59,42 @@ app.post('/result', function(req,res){
     })
     .catch(function(err){
       console.log(err)})
-  
+      app.post('/description', function(req,res){
+        var query = req.app.ISBN13;
+        console.log(query);
+      });
 })
 
-app.post('/description', function(req,res){
-  var query = req.app.ISBN13;
-  console.log(query);
 });
+//Fetch page render
+app.get('/Fetch', function(req,res){
+  res.render('fetch');
+  //Result from fetch
+app.post('/fetchresult', function(req,res){
+  var query = req.body.query;
+  console.log(query);
+  res.redirect("/");
+  var url = "https://openlibrary.org/api/books?bibkeys=ISBN:9780345453747&format=json&jscmd=data";
+  let options = {json: true};
+
+
+
+request(url, options, (error, res, body) => {
+    if (error) {
+        return  console.log(error)
+    };
+
+    if (!error && res.statusCode == 200) {
+        // do something with JSON, using the 'body' variable
+    };
+
+    for (x in body) {
+      console.log(x);
+    }
+    console.log(body);
+});
+});
+
 });
 app.listen(3000);
 console.log('Server started');
