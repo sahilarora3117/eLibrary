@@ -62,8 +62,12 @@ app.post('/result', function(req,res){
       console.log("Error connecting to the server.Contact Administrator");
       res.render("index");
       });
-  
-})
+  app.post('/Recommend', function(req,res){
+    var query = req.body.key;
+    console.log(query);
+    
+  });
+});
 
 });
 //Fetch page render
