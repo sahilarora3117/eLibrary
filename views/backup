@@ -1,0 +1,10 @@
+  <div class= "container-fluid">
+    <p>Subjects: </p>
+    <% book.subjects.forEach(ele => { %>
+        <a class="btn btn-outline-primary btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
+    <% }) %>
+    <br>
+    <p>People: </p>
+    <% book.people.forEach(ele => { %>
+        <a class="btn btn-outline-warning btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
+    <% }) %>

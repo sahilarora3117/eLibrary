@@ -44,6 +44,7 @@ app.post('/result', function(req,res){
   var books = [];
   var quest = "CALL db.index.fulltext.queryNodes('books',"
   quest +="'"+ query +"');"
+
   session
     .run (quest)
     .then(function(result){
@@ -58,41 +59,53 @@ app.post('/result', function(req,res){
       res.render('result',{books: bookArray, quest: quest});
     })
     .catch(function(err){
-      console.log(err)})
-      app.post('/description', function(req,res){
-        var query = req.app.ISBN13;
-        console.log(query);
+      console.log("Error connecting to the server.Contact Administrator");
+      res.render("index");
       });
+  
 })
 
 });
 //Fetch page render
 app.get('/Fetch', function(req,res){
   res.render('fetch');
+  
   //Result from fetch
 app.post('/fetchresult', function(req,res){
   var query = req.body.query;
   console.log(query);
-  res.redirect("/");
-  var url = "https://openlibrary.org/api/books?bibkeys=ISBN:9780345453747&format=json&jscmd=data";
+  var url = "https://openlibrary.org/api/books?bibkeys=ISBN:"+String(query)+"&format=json&jscmd=data";
   let options = {json: true};
 
+  request(url, options, (error, ree, body) => {
+      if (error) {
+          return  console.log(error)
+      };
 
-
-request(url, options, (error, res, body) => {
-    if (error) {
-        return  console.log(error)
-    };
-
-    if (!error && res.statusCode == 200) {
-        // do something with JSON, using the 'body' variable
-    };
-
-    for (x in body) {
-      console.log(x);
-    }
-    console.log(body);
-});
+      if (!error && ree.statusCode == 200) {
+          // do something with JSON, using the 'body' variable
+      };
+      var info = body["ISBN:"+String(query)];
+      var bookArray = [];
+  try{
+  bookArray.push({
+    title:info["title"],
+    number_of_pages:info["number_of_pages"],
+    by_statement: info["by_statement"],
+    subjects: info["subjects"],
+    url: info["url"],
+    people: info["subject_people"],
+    publish_date: info["publish_date"]
+  });
+  res.render('fetchresult',{books: bookArray});
+  }
+  catch{
+    res.render('fetchresult',{books: bookArray});
+  }
+ 
+  });
+  
+  
 });
 
 });

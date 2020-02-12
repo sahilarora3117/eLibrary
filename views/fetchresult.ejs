@@ -1,0 +1,74 @@
+<!-- views/partials/head.ejs -->
+<meta charset="UTF-8">
+<title>eLibrary VIT Chennai</title>
+
+<!-- CSS (load bootstrap from a CDN) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<!-- views/partials/header.ejs -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">eLibrary</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/Search">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/Fetch">Fetch</a>
+        </li>
+    </div>
+  </nav>
+
+<% if (books.length ==0) { %>
+    <div class="alert alert-danger container" role="alert">
+       <p> No result Found. Please search again </p> <br>
+        
+      </div>
+      <div class="container">
+      <a href="/fetch"><button type="button" class="btn btn-primary">Go back to Search</button></a>
+    </div>
+<% } %>
+
+
+<% books.forEach(book => { console.log(book)%>
+
+<div class="jumbotron container">
+    <h1 class="display-4"><%= book.title %> </h1>
+    <p class="lead">Author: <%= book.by_statement %> </p>
+    <p>Publish Date: <%= book.publish_date %> </p>
+    <p>Number of Pages: <%= book.number_of_pages %> </p>
+    <hr class="my-4">
+    
+    <div class= "container-fluid">
+      <div class= "container-fluid">
+        <p>Subjects: </p>
+        
+        <% try{book.subjects.forEach(ele => { %>
+            <a class="btn btn-outline-primary btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
+            <% })} catch{ %>
+              <div class="alert alert-warning container" role="alert">
+                No subject information found.
+              </div>
+            <%} %>
+        <br><br>
+        <p>People: </p>
+        <% try{book.people.forEach(ele => { %>
+            <a class="btn btn-outline-warning btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
+        <% })} catch{ %>
+          <div class="alert alert-warning container" role="alert">
+            No people information found.
+          </div>
+        <%} %>
+    <br><br>
+    <a class="btn btn-success" href="<%= book.url %>" target="_blank" role="button" style="margin:2px">Go to Book Page</a> 
+    
+  </div>
+<% }) %>
+
+ 
+<!-- views/partials/footer.ejs -->
+<p class="text-center text-muted">© Copyright 2019 Sahil Arora, S.V, Aditya Hemant</p>
