@@ -4,7 +4,8 @@
 
 <!-- CSS (load bootstrap from a CDN) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- views/partials/header.ejs -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">eLibrary</a>
@@ -37,14 +38,18 @@
     
     
     <div class="card">
-        <h5 class="card-header"><%=book.title  %></h5>
+        <h5 class="card-header"><%=book.title%></h5>
         <div class="card-body">
-          <h5 class="card-title">Author: <%= book.authors %> </h5>
-          <p class="card-text">ISBN13: <%= book.ISBN13 %> </p>
-          <% var ISBN = book.ISBN13 %> 
+          <h5 class="card-title">Author: <%=book.authors%> </h5>
+          <p class="card-text">ISBN13: <%=book.ISBN13%> </p>
+          <% var ISBN = book.ISBN13%> 
           <form method="post" action="/Recommend">
-            <input type="hidden" name="key" value="<%= book.ISBN13 %> ">
+            <input type="hidden" name="key" value="<%=book.ISBN13%> ">
           <input type="submit" value="Get Recommendations">
+          </form>
+          <form method="post" action="/fetchresult">
+            <input type="hidden" name="query" value="<%=book.ISBN13%> ">
+          <input type="submit" value="Fetch">
           </form>
         </div>
       </div>
