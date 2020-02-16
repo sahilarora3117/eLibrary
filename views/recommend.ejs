@@ -24,6 +24,9 @@
     </div>
   </nav>
   <br>
+  <div class="jumbotron">
+    <h3 class="display-4">Recommendations based on <%= query %> </h3>
+  </div>
 <% if (books.length ==0) { %>
     <div class="alert alert-danger container" role="alert">
        <p> No result Found. Please search again </p> <br>
@@ -45,11 +48,11 @@
           <% var ISBN = book.ISBN13 %> 
           <form method="post" action="/Recommend">
             <input type="hidden" name="key" value="<%= book.ISBN13 %> ">
-          <input type="submit" value="Get Recommendations">
+            <button type="submit" value="Get Recommendations" class="btn btn-success">Get Recommendations</button>
           </form>
           <form method="post" action="/fetchresult">
             <input type="hidden" name="query" value="<%= book.ISBN13 %> ">
-          <input type="submit" value="Fetch">
+            <button type="submit" value ="Fetch" class="btn btn-info">Search online</button>
           </form>
         </div>
       </div>

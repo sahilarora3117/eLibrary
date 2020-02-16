@@ -66,7 +66,7 @@ app.post('/result', function(req,res){
       });
   app.post('/Recommend', function(req,res){
     var query = req.body.key;
-    console.log(query);
+    console.log("a"+query+"a");
     var quest = 'MATCH(b:Book{isbn13:"'+query.trim()+'"})<-[:GENRES]-(g:Dgenre)-[:GENRES]->(rb:Book)<-[:GENRES]-(g1:Dgenre)-[:GENRES]->(rb2:Book) return rb2';
     session
     .run (quest)
@@ -81,12 +81,48 @@ app.post('/result', function(req,res){
 
       });
       console.log(bookArray);
-      res.render('recommend',{books: bookArray, quest: quest});
+      res.render('recommend',{books: bookArray, query: query});
     })
     .catch(function(err){
       console.log("Error connecting to the server.Contact Administrator");
       res.render("index");
       });
+    
+  });
+  app.post('/fetchresult', function(req,res){
+    var query = req.body.query;
+    console.log(query);
+    var url = "https://openlibrary.org/api/books?bibkeys=ISBN:"+String(query)+"&format=json&jscmd=data";
+    let options = {json: true};
+  
+    request(url, options, (error, ree, body) => {
+        if (error) {
+            return  console.log(error)
+        };
+  
+        if (!error && ree.statusCode == 200) {
+            // do something with JSON, using the 'body' variable
+        };
+        var info = body["ISBN:"+String(query)];
+        var bookArray = [];
+    try{
+    bookArray.push({
+      title:info["title"],
+      number_of_pages:info["number_of_pages"],
+      by_statement: info["by_statement"],
+      subjects: info["subjects"],
+      url: info["url"],
+      people: info["subject_people"],
+      publish_date: info["publish_date"]
+    });
+    res.render('fetchresult',{books: bookArray});
+    }
+    catch{
+      res.render('fetchresult',{books: bookArray});
+    }
+   
+    });
+    
     
   });
 });

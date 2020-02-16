@@ -45,11 +45,11 @@
           <% var ISBN = book.ISBN13%> 
           <form method="post" action="/Recommend">
             <input type="hidden" name="key" value="<%=book.ISBN13%> ">
-          <input type="submit" value="Get Recommendations">
+          <button type="submit" value="Get Recommendations" class="btn btn-success">Get Recommendations</button>
           </form>
           <form method="post" action="/fetchresult">
             <input type="hidden" name="query" value="<%=book.ISBN13%> ">
-          <input type="submit" value="Fetch">
+            <button type="submit" value ="Fetch" class="btn btn-info">Search online</button>
           </form>
         </div>
       </div>
