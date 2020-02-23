@@ -3,58 +3,79 @@
 <title>eLibrary VIT Chennai</title>
 
 <!-- CSS (load bootstrap from a CDN) -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+
 <!-- views/partials/header.ejs -->
 <%- include('partials/navbar') %>
 <% if (books.length ==0) { %>
-    <div class="alert alert-danger container" role="alert">
-       <p> No result Found. Please search again </p> <br>
-        
-      </div>
-      <div class="container">
-      <a href="/fetch"><button type="button" class="btn btn-primary">Go back to Search</button></a>
-    </div>
+  <div class="alert alert-danger container" role="alert">
+    <p> No result Found. Please search again </p> <br>
+
+  </div>
+  <div class="container">
+    <a href="/fetch">
+      <button type="button" class="btn btn-primary">Go back to Search</button>
+    </a>
+  </div>
 <% } %>
 
 
-<% books.forEach(book => { console.log(book)%>
+<% books.forEach(book => {%>
+  <div class="container mt-5">
+    <h2><%= book.title %> </h2>
+    <h6>by <%= book.by_statement %></h6>
 
-<div class="jumbotron container">
-    <h1 class="display-4"><%= book.title %> </h1>
-    <p class="lead">Author: <%= book.by_statement %> </p>
-    <p>Publish Date: <%= book.publish_date %> </p>
-    <p>Number of Pages: <%= book.number_of_pages %> </p>
+    <small> Published in <%= book.publish_date %>  ·  <%= book.number_of_pages %> pages</small>
     <hr class="my-4">
-    
-    <div class= "container-fluid">
-      <div class= "container-fluid">
-        <p>Subjects: </p>
-        
-        <% try{book.subjects.forEach(ele => { %>
-            <a class="btn btn-outline-primary btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
-            <% })} catch{ %>
-              <div class="alert alert-warning container" role="alert">
-                No subject information found.
-              </div>
-            <%} %>
-        <br><br>
-        <p>People: </p>
-        <% try{book.people.forEach(ele => { %>
-            <a class="btn btn-outline-warning btn-sm" href="<%= ele.url %>" target="_blank" role="button" style="margin:2px"><%=ele.name  %>  </a> 
+    <div class="container-fluid">
+      <div class="container-fluid">
+        Subjects
+        <br>
+        <% try{book.subjects.forEach(element => { %>
+          <a class="chip mr-2 mb-2" href="<%= element.url %>" target="_blank" role="button"
+           ><%=element.name%> </a>
+        <% })} catch{ %>
+          <div class="alert alert-warning container" role="alert">
+            No subject information found.
+          </div>
+        <%} %>
+        <br>
+        <span class="mt-4">People</span>
+        <br>
+        <% try{book.people.forEach(element => { %>
+          <a class="chip mr-2 mb-2" href="<%= element.url %>" target="_blank" role="button"
+            ><%=element.name  %> </a>
         <% })} catch{ %>
           <div class="alert alert-warning container" role="alert">
             No people information found.
           </div>
         <%} %>
-    <br><br>
-    <a class="btn btn-success" href="<%= book.url %>" target="_blank" role="button" style="margin:2px">Go to Book Page</a> 
-    
-  </div>
-<% }) %>
+        <br>
+        <span class="mt-4">About the edition</span>
+        <br>
+        
+        <a class="btn btn-success" href="<%= book.url %>" target="_blank" role="button" style="margin:2px">Open Book in OpenLibrary</a>
 
- 
-<!-- views/partials/footer.ejs -->
-<p class="text-center text-muted">© Copyright 2019 Sahil Arora, S.V, Aditya Hemant</p>
+      </div>
+  <% }) %>
+
+
+    <!-- views/partials/footer.ejs -->
+  <p class="text-center text-muted mt-5">© Copyright 2019 Sahil Arora, S.V, Aditya Hemant</p>
+
+  <style type="text/css">
+  .chip,
+  .chip:visited,
+  .chip:hover {
+    color: black;
+    text-decoration: none;
+  }
+
+  </style>

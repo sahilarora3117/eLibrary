@@ -28,7 +28,7 @@ var session = driver.session();
 
 //main page resnder path
 app.get('/', function(req, res) {
-	res.render('index');
+	res.render('search');
 });
 //Search page render path
 app.get('/Search', function(req, res) {
