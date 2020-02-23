@@ -1,24 +1,60 @@
-<% books.forEach(book => { %>
-    
-    
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+<div class="docs-demo columns">
+  <% books.forEach(book => { %>
+  <div class="column col-6 col-md-6 col-sm-12 mt-4">
     <div class="card">
-        <h5 class="card-header"><%=book.title%></h5>
-        <div class="card-body">
-          <h5 class="card-title">Author: <%=book.authors%> </h5>
-          <p class="card-text">ISBN13: <%=book.ISBN13%> </p>
-          <% var ISBN = book.ISBN13%> 
-          <form method="post" action="/Recommend">
-            <input type="hidden" name="key" value="<%=book.ISBN13%> ">
-          <button type="submit" value="Get Recommendations" class="btn btn-success">Get Recommendations</button>
-          </form>
-          <form method="post" action="/fetchresult">
+      <div class="card-image">
+        <center>
+        <input type="hidden" class="isbn" id="<%=book.ISBN13%>" value="<%=book.ISBN13%>">
+          <img class="img-responsive" width = "250px" src="https://vignette.wikia.nocookie.net/daema/images/7/72/Placeholder_book.svg/revision/latest?cb=20150618183415" alt="OS X Yosemite">
+        </center>
+      </div>
+      <div class="card-body">
+        <b class="card-title"><%=book.title%> </b>
+        <br>
+        Author: <%=book.authors%>
+        <p>ISBN13: <%=book.ISBN13%> </p>
+        <% var ISBN = book.ISBN13%>
+
+        <div class="row">
+          <form class="col-lg-4 col-md-12" method="post" action="/fetchresult">
             <input type="hidden" name="query" value="<%=book.ISBN13%> ">
-            <button type="submit" value ="Fetch" class="btn btn-info">Search online</button>
+            <button class="btn btn-link" type="submit" type="submit">Search online</button>
+          </form>
+          <form class="col-lg-4 col-md-12" method="post" action="/Recommend">
+            <input type="hidden" name="key" value="<%=book.ISBN13%> ">
+            <button class="btn btn-primary" type="submit">Get Recommendations</button>
           </form>
         </div>
+
       </div>
-  
-    
-      <br>
-      <br>
+    </div>
+  </div>
 <% }) %>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  $(".isbn").each (function () {
+    var isbn = $(this);
+    console.log (isbn);
+
+    $.ajax ({
+      url: "https://openlibrary.org/api/books?bibkeys=ISBN:" + isbn.val () + "&format=json&jscmd=data",
+      success: function(result) {
+        console.log (result);
+        $.each(result, function(key,val){
+          if (val.cover.medium != null) {
+            isbn.next().attr ('src', val.cover.medium);
+          } else {
+            isbn.next().attr ('src', 'https://vignette.wikia.nocookie.net/daema/images/7/72/Placeholder_book.svg/revision/latest?cb=20150618183415');
+          }
+        });
+      }
+    });
+  });
+</script>

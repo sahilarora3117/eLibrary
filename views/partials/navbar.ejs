@@ -1,19 +1,18 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">eLibrary</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="/Search">Search</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/Fetch">Online List</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/List">List</a>
-          </li>
-    </div>
-  </nav>
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a href="/" class="btn btn-link">eLibrary</a>
+  </section>
+  <section class="navbar-center">
+    <img src="https://picturepan2.github.io/spectre/img/spectre-logo.svg">
+  </section>
+  <section class="navbar-section">
+    <a href="/Search" class="btn btn-link">Book/Author Search</a>
+    <a href="/Fetch" class="btn btn-link">ISBN Search</a>
+    <a href="/List" class="btn btn-link">Genre</a>
+  </section>
+</header>
