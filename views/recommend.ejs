@@ -6,23 +6,21 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <!-- views/partials/header.ejs -->
-<%- include('partials/navbar') %>
-  <br>
-  <div class="jumbotron">
-    <h3 class="display-4">Recommendations based on <%= query %> </h3>
-  </div>
-<% if (books.length ==0) { %>
-    <div class="alert alert-danger container" role="alert">
-       <p> No result Found. Please search again </p> <br>
-        
-      </div>
-      <div class="container">
-      <a href="/search"><button type="button" class="btn btn-primary">Go back to Search</button></a>
-    </div>
-<% } %>
-<div class="container">
-  <%- include('partials/resultshow') %>
 
+<%- include('partials/navbar') %>
+<div class="container mt-5">
+  <h3>Recommendations for <%= query %> </h3>
+  <% if (books.length ==0) { %>
+      <div class="alert alert-danger container" role="alert">
+        <p> No result Found. Please search again </p> <br>
+        </div>
+        <div class="container">
+        <a href="/search"><button type="button" class="btn btn-primary">Go back to Search</button></a>
+      </div>
+  <% } %>
+  <div class="container">
+  <%- include('partials/resultshow') %>
+</div>
 
 </div>
 <!-- views/partials/footer.ejs -->

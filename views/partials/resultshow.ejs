@@ -15,9 +15,8 @@
       <div class="card-body">
         <b class="card-title"><%=book.title%> </b>
         <br>
-        Author: <%=book.authors%>
-        <p>ISBN13: <%=book.ISBN13%> </p>
-        <% var ISBN = book.ISBN13%>
+        by <%=book.authors%>
+        <p><small>ISBN13: <%=book.ISBN13%> </small> </p>
 
         <div class="row">
           <form class="col-lg-4 col-md-12" method="post" action="/fetchresult">

@@ -32,7 +32,7 @@
     <h2><%= book.title %> </h2>
     <h6>by <%= book.by_statement %></h6>
 
-    <small> Published in <%= book.publish_date %>  ·  <%= book.number_of_pages %> pages </small>
+    <small> Published in <%= book.publish_date %>  ·  <%= book.number_of_pages %> pages</small>
     <hr class="my-4">
     <div class="container-fluid">
       <div class="container-fluid">
@@ -57,7 +57,10 @@
             No people information found.
           </div>
         <%} %>
-        <br><br>
+        <br>
+        <span class="mt-4">About the edition</span>
+        <br>
+        
         <a class="btn btn-success" href="<%= book.url %>" target="_blank" role="button" style="margin:2px">Open Book in OpenLibrary</a>
 
       </div>
