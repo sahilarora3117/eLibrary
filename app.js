@@ -29,12 +29,6 @@ var session = driver.session();
 //main page resnder path
 app.get('/', function(req, res) {
 	res.render('search');
-});
-//Search page render path
-app.get('/Search', function(req, res) {
-	res.render('search');
-
-	//result from search
 	app.post('/result', function(req, res) {
 		var query = req.body.query;
 		console.log(query);
@@ -137,8 +131,8 @@ app.get('/Search', function(req, res) {
 
 		});
 	});
-
 });
+
 //Fetch page render
 app.get('/Fetch', function(req, res) {
 	res.render('fetch');

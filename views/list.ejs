@@ -14,7 +14,7 @@
 <% books.forEach(book => {%>
     <form method="post" action="/listresult" style="float: left;">
     <input type="hidden" name = "genre" value="<%=book.genre%> ">
-    <button type="submit" class="btn chip btn-sm mb-2 mr-2">
+    <button class="btn" type="submit" style="margin: 3px;">
         <%= book.genre %>
     </button>
     </form>
