@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
 
 		var books = [];
 		var quest = "CALL db.index.fulltext.queryNodes('bookssearch',"
-		quest += "'" + query + "');"
+		quest += "'" + query.trim() + "*');"
 
 		session
 			.run(quest)
